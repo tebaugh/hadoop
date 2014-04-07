@@ -23,8 +23,6 @@ yum install -y gcc >/dev/null 2>&1
 yum install -y make >/dev/null 2>&1
 echo "install kernel-devel...."
 yum install -y  kernel-devel >/dev/null 2>&1
-echo "Install X WIndows ...."
-yum groupinstall -y "X Window System" >/dev/null 2>&1
 echo "update OS..."
 yum update  -y  >/dev/null 2>&1
 echo "Installing GuestAdditions ...."
