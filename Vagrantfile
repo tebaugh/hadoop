@@ -29,7 +29,38 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    hdrm_config.vm.host_name = "hdrm"     
    hdrm_config.vm.provision "shell", path: "hadoop_provision.sh"
   end
+ 
+  #Hadoop Slave One
+  config.vm.define :hdslave1 do |hdslave1_config|
+   hdslave1_config.vm.network "private_network", ip: "192.268.1.13"
+   hdslave1_config.vm.host_name = "hdslave1"
+   hdslave1_config.vm.provision "shell", path: "hadoop_provision.sh"
+  end
+ 
+  #Hadoop Slave Two
+  config.vm.define :hdslave2 do |hdslave2_config|
+   hdslave2_config.vm.network "private_network", ip: "192.268.1.14"
+   hdslave2_config.vm.host_name = "hdslave2"
+   hdslave2_config.vm.provision "shell", path: "hadoop_provision.sh"
+  end
 
+  config.vm.define :hdslave3 do |hdslave3_config|
+   hdslave3_config.vm.network "private_network", ip: "192.268.1.15"
+   hdslave3_config.vm.host_name = "hdslave3"
+   hdslave3_config.vm.provision "shell", path: "hadoop_provision.sh"
+  end
+
+  config.vm.define :hdslave4 do |hdslave4_config|
+   hdslave4_config.vm.network "private_network", ip: "192.268.1.16"
+   hdslave4_config.vm.host_name = "hdslave4"
+   hdslave4_config.vm.provision "shell", path: "hadoop_provision.sh"
+  end
+
+  config.vm.define :hdclient do |hdclient_config|
+   hdclient_config.vm.network "private_network", ip: "192.268.1.17"
+   hdclient_config.vm.host_name = "hdclient"
+   hdclient_config.vm.provision "shell", path: "hadoop_provision.sh"
+  end
 
   # path, and data_bags path (all relative to this Vagrantfile), and adding
   # some recipes and/or roles.
