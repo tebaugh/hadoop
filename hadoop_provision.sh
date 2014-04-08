@@ -32,6 +32,40 @@ echo "Mounting GuestAdditions .... "
 mount VBoxGuestAdditions_4.3.0.iso -o loop /mnt >/dev/null 2>&1
 echo "Mounting LinuxAdditions...."
 sh /mnt/VBoxLinuxAdditions.run >/dev/null 2>&1
+echo "g++ needed to compile Protocol Buffers .... installing ...."
+sudo yum install -y gcc-c++ >/dev/null 2>&1
+echo "downloading Protocol Buffers ....."
+wget -c https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz >/dev/null 2>&1
+echo "expanding Protocol Buffers"
+tar -zxvf protobuf-2.5.0.tar.gz >/dev/null 2>&1
+cd protobuf-2.5.0
+echo "Configuring Protocol Buffers.  Needed only if building hadoop via source ... "
+./configure >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Unable to configure Protocol Buffers...."
+  exit 1
+fi
+echo "Running make on Protocol Buffers....."
+make >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Unable to make Protocol Buffers...."
+  exit 1
+fi
+make check >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Make check failed on Protocol Buffers...."
+  exit 1
+fi
+make install >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Installing Protocol Buffers failed...."
+  exit 1
+fi
+echo "Downloading hadoop....."
+cd ~ >/dev/null 2>&1
+wget -c http://apache.mirrors.pair.com/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz >/dev/null 2>&1
+echo "expanding hadoop ....."
+tar -zxvf hadoop-2.2.0.tar.gz >/dev/null 2>&1
 touch "/var/vagrant_provision"
 echo "rebooting now..."
 reboot now
